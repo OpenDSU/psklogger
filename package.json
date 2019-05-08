@@ -1,0 +1,22 @@
+{
+  "name": "psk-logger",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/stefancosmin.romanescu/psk-logger.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/stefancosmin.romanescu/psk-logger/issues"
+  },
+  "homepage": "https://gitlab.com/stefancosmin.romanescu/psk-logger#readme",
+  "dependencies": {
+    "zeromq": "4.6.0"
+  }
+}

@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/stefancosmin.romanescu/psk-logger.git"
+    "url": "git+https://github.com/PrivateSky/psklogger.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/stefancosmin.romanescu/psk-logger/issues"
+    "url": "git+https://github.com/PrivateSky/psklogger/issues"
   },
-  "homepage": "https://gitlab.com/stefancosmin.romanescu/psk-logger#readme",
+  "homepage": "git+https://github.com/PrivateSky/psklogger#readme",
   "dependencies": {
     "zeromq": "4.6.0"
   }

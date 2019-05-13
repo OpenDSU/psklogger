@@ -1,5 +1,5 @@
-const LoggerClient = require('../../src/LoggerClient/LoggerClient');
-const TransportClient = require('../../src/TransportClient/TransportClient');
+const LoggerClient = require('../../src/LoggerClient').LoggerClient;
+const TransportClient = require('../../src/MessageConnectorClient').TransportClient;
 
 const transport = new TransportClient('tcp://127.0.0.1:7000');
 

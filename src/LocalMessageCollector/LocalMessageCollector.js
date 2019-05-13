@@ -6,7 +6,7 @@ const zeroMQ = require('zeromq');
  * @param {function!} onMessageCallback
  * @constructor
  */
-function TransportServer(address, onMessageCallback) {
+function LocalMessageCollector(address, onMessageCallback) {
     const zmqSocket = zeroMQ.createSocket('sub');
 
     zmqSocket.bindSync(address);
@@ -15,4 +15,4 @@ function TransportServer(address, onMessageCallback) {
     zmqSocket.on('message', onMessageCallback);
 }
 
-module.exports = TransportServer;
+module.exports = LocalMessageCollector;

@@ -1,5 +1,5 @@
 const LoggerClient = require('../LoggerClient').LoggerClient;
-const TransportClient = require('../MessageConnectorClient').TransportClient;
+const TransportClient = require('../MessageCollectorClient').TransportClient;
 
 
 function PSKLogger () {

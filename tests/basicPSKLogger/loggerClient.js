@@ -1,10 +1,12 @@
-const PSKLogger = require('../../index').PSKLogger;
-const localCollector = require('../../src/LocalMessageCollector').LocalMessageCollector;
+console.log('I am a client');
 
-localCollector('tcp://127.0.0.1:7777', (topic, message) => {
-    console.log(`${topic} >> ${message}`);
-});
+const PSKLogger = require('../../index').PSKLogger;
 
 const logger = new PSKLogger();
 
+console.log('send');
+
 logger.debug('test');
+
+
+

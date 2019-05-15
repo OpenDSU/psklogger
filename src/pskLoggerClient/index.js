@@ -11,27 +11,27 @@ function PSKLogger () {
 
     function debug(...params) {
         const meta = prepareMeta();
-        logger.debug(meta, ...params);
+        return logger.debug(meta, ...params);
     }
 
     function error(...params) {
         const meta = prepareMeta();
-        logger.error(meta, ...params);
+        return logger.error(meta, ...params);
     }
 
     function info(...params) {
         const meta = prepareMeta();
-        logger.info(meta, ...params);
+        return logger.info(meta, ...params);
     }
 
     function log(...params) {
         const meta = prepareMeta();
-        logger.log(meta, ...params);
+        return logger.log(meta, ...params);
     }
 
     function warn(...params) {
         const meta = prepareMeta();
-        logger.warn(meta, ...params);
+        return logger.warn(meta, ...params);
     }
 
     function prepareMeta() {

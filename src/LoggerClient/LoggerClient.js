@@ -16,31 +16,31 @@ function LoggerClient(messagePublisher) {
     function debug(meta = {}, ...params) {
         const logLevel = _getLogLevel(LogLevel.debug);
 
-        genericLoggerClient.log(logLevel, meta, params);
+        return genericLoggerClient.log(logLevel, meta, params);
     }
 
     function error(meta = {}, ...params) {
         const logLevel = _getLogLevel(LogLevel.error);
 
-        genericLoggerClient.log(logLevel, meta, params);
+        return genericLoggerClient.log(logLevel, meta, params);
     }
 
     function info(meta = {}, ...params) {
         const logLevel = _getLogLevel(LogLevel.info);
 
-        genericLoggerClient.log(logLevel, meta, params);
+        return genericLoggerClient.log(logLevel, meta, params);
     }
 
     function log(meta = {}, ...params) {
         const logLevel = _getLogLevel(LogLevel.log);
 
-        genericLoggerClient.log(logLevel, meta, params);
+        return genericLoggerClient.log(logLevel, meta, params);
     }
 
     function warn(meta = {}, ...params) {
         const logLevel = _getLogLevel(LogLevel.warn);
 
-        genericLoggerClient.log(logLevel, meta, params);
+        return genericLoggerClient.log(logLevel, meta, params);
     }
 
 

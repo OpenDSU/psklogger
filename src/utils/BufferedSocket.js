@@ -5,9 +5,14 @@ const SocketType = require('./SocketType');
  * connection is established, otherwise the first messages would be lost
  * @param {Socket} socket - instance of ZeroMQ Socket
  * @param {SocketType<number>} type - used to determine if should listen for 'connect' or 'accept' event
+ * @param {Number?} maxSize = 1000 - Max size for the internal buffer, if 0 the buffer is infinite but can cause memory leak
  * @constructor
  */
-function BufferedSocket(socket, type) {
+function BufferedSocket(socket, type, maxSize = 1000) {
+    if(maxSize < 0) {
+        maxSize = 1000;
+    }
+
     const messageQueue = [];
     let isConnected = false;
 
@@ -23,7 +28,9 @@ function BufferedSocket(socket, type) {
 
     function send(message) {
         if (!isConnected) {
-            messageQueue.push(message);
+            if (maxSize !== 0 && messageQueue.length < maxSize) {
+                messageQueue.push(message);
+            }
         } else {
             socket.send(message);
         }

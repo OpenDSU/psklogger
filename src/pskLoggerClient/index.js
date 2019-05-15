@@ -35,11 +35,9 @@ function PSKLogger () {
     }
 
     function prepareMeta() {
-        const processPath = process.argv[1];
-        const processRelativePath = processPath.split('/modules/', 2)[1];
-        return {
-            processPath: processRelativePath
-        };
+        if(global.$$.getEnvironmentData) {
+            return global.$$.getEnvironmentData();
+        }
     }
 
 

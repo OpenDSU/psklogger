@@ -1,6 +1,6 @@
 const TransportInterface = require('./TransportInterface');
-const zeroMQ = require('zeromq');
 const utils = require('../utils');
+const zeroMQ = require('zeromq');
 
 
 /**
@@ -9,7 +9,7 @@ const utils = require('../utils');
  * @implements TransportInterface
  * @constructor
  */
-function TransportClient(address) {
+function MessagePublisher(address) {
     TransportInterface.call(this);
 
     const zmqSocket = zeroMQ.createSocket('pub');
@@ -43,4 +43,4 @@ function TransportClient(address) {
     });
 }
 
-module.exports = TransportClient;
+module.exports = MessagePublisher;

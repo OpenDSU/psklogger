@@ -1,21 +1,24 @@
+const Configurator = require('../../../src/utils').Configurator;
 const PubSubProxy = require('../../../src/PubSubProxy');
+
+const config = Configurator.getConfig();
 
 
 /** starting proxy **/
-const proxy = new PubSubProxy({pubAddress: 'tcp://127.0.0.1:7000', subAddress: 'tcp://127.0.0.1:7001'});
+const proxy = new PubSubProxy(config);
 
 
 /** starting collector **/
-const LocalCollector = require('../../../src/LocalMessageCollector').LocalMessageCollector;
+const MessageSubscriber = require('../../../src/MessageSubscriber').MessageSubscriber;
 
-new LocalCollector('tcp://127.0.0.1:7001', (topic, message) => {
-    console.log('log level', topic.toString(), 'message:', message.toString());
+new MessageSubscriber(config.addressForSubscribers, ['logs'], (topic, message) => {
+    console.log('log level', topic.toString(), 'message:', JSON.parse(message.toString()));
 });
 
 /** starting logger **/
 const LoggerClient = require('../../../src/LoggerClient').LoggerClient;
-const TransportClient = require('../../../src/MessageCollectorClient').TransportClient;
-const transport = new TransportClient('tcp://127.0.0.1:7000');
+const MessagePublisher = require('../../../src/MessagePublisher').MessagePublisher;
+const transport = new MessagePublisher(config.addressForPublishers);
 const logger = new LoggerClient(transport);
 
 logger.log(undefined, 2);

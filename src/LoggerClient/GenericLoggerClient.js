@@ -2,10 +2,10 @@ const LogFactory = require('./LogFactory');
 
 /**
  *
- * @param {TransportInterface} transport
+ * @param {TransportInterface} messagePublisher
  * @constructor
  */
-function GenericLoggerClient(transport) {
+function GenericLoggerClient(messagePublisher) {
     /**
      *
      * @param {{code: Number, name: string}} logLevel
@@ -16,7 +16,7 @@ function GenericLoggerClient(transport) {
         const log = LogFactory.createLog(logLevel, meta, messages);
 
         const logChannel = `logs.${logLevel.name}`;
-        transport.send(logChannel, log);
+        messagePublisher.send(logChannel, log);
     }
 
     this.log = log;

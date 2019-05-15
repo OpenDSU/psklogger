@@ -1,7 +1,7 @@
-const TransportClient    = require('./TransportClient');
+const MessagePublisher   = require('./MessagePublisher');
 const TransportInterface = require('./TransportInterface');
 
 module.exports = {
-    TransportClient,
+    MessagePublisher,
     TransportInterface
 };

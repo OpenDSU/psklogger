@@ -3,12 +3,12 @@ const LogLevel = require('../utils/LogLevel');
 
 /**
  *
- * @param {TransportInterface} transport
+ * @param {TransportInterface} messagePublisher
  * @constructor
  */
-function LoggerClient(transport) {
+function LoggerClient(messagePublisher) {
 
-    const genericLoggerClient = new GenericLoggerClient(transport);
+    const genericLoggerClient = new GenericLoggerClient(messagePublisher);
 
 
     /************* PUBLIC METHODS *************/

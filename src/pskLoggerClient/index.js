@@ -1,10 +1,13 @@
+const Configurator = require('../utils/Configurator');
 const LoggerClient = require('../LoggerClient').LoggerClient;
-const TransportClient = require('../MessageCollectorClient').TransportClient;
+const MessagePublisher = require('../MessagePublisher').MessagePublisher;
 
 
 function PSKLogger () {
-    const transport = new TransportClient('tcp://127.0.0.1:7777');
-    const logger = new LoggerClient(transport);
+
+    const config = Configurator.getConfig();
+    const messagePublisher = new MessagePublisher(config.addressForPublishers);
+    const logger = new LoggerClient(messagePublisher);
 
     function debug(...params) {
         const meta = prepareMeta();

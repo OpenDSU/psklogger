@@ -24,23 +24,19 @@ function MessagePublisher(address) {
      * @param {Object} logObject
      */
     this.send = function (channel, logObject) {
-        const serializedLog = JSON.stringify(logObject);
+        try {
+            const serializedLog = JSON.stringify(logObject);
 
-        socket.send([channel, serializedLog]);
+            socket.send([channel, serializedLog]);
+        } catch (e) {
+            process.stderr.write('Error while sending or serializing message');
+        }
     };
 
 
     /************* MONITOR SOCKET *************/
 
     zmqSocket.connect(address);
-
-    const events = ["SIGINT", "SIGUSR1", "SIGUSR2", "uncaughtException", "SIGTERM", "SIGHUP"];
-
-    events.forEach(event => {
-        process.on(event, () => {
-            zmqSocket.close();
-        });
-    });
 }
 
 module.exports = MessagePublisher;

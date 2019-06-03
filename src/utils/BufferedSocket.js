@@ -8,13 +8,14 @@ const SocketType = require('./SocketType');
  * @param {Number?} maxSize = 1000 - Max size for the internal buffer, if 0 the buffer is infinite but can cause memory leak
  * @constructor
  */
-function BufferedSocket(socket, type, maxSize = 1000) {
+function BufferedSocket(socket, type, maxSize = 10000) {
     if(maxSize < 0) {
         maxSize = 1000;
     }
 
-    const messageQueue = [];
+    let messageQueue = [];
     let isConnected = false;
+    let currentBufferSize = 0;
 
     socket.monitor();
     const event = _getEventForType(type);
@@ -28,7 +29,8 @@ function BufferedSocket(socket, type, maxSize = 1000) {
 
     function send(message) {
         if (!isConnected) {
-            if (maxSize !== 0 && messageQueue.length < maxSize) {
+            if (maxSize !== 0 && currentBufferSize < maxSize) {
+                currentBufferSize += 1;
                 messageQueue.push(message);
             }
         } else {
@@ -42,6 +44,9 @@ function BufferedSocket(socket, type, maxSize = 1000) {
         for (const message of messageQueue) {
             socket.send(message);
         }
+
+        messageQueue = [];
+        currentBufferSize = 0;
     }
 
     function _getEventForType(type) {

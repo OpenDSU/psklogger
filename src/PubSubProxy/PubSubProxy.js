@@ -17,8 +17,12 @@ function PubSubProxy({addressForPublishers, addressForSubscribers}) {
 
     // By default xpub only signals new subscriptions
     // Settings it to verbose = 1 , will signal on every new subscribe
-    backend.setsockopt(zeroMQ.ZMQ_XPUB_VERBOSE, 1);
-    
+    // uncomment next lines if messages are lost
+    // backend.setsockopt(zeroMQ.ZMQ_XPUB_VERBOSE, 1);
+    // backend.setsockopt(zeroMQ.ZMQ_SNDHWM, 0);
+    // backend.setsockopt(zeroMQ.ZMQ_RCVHWM, 0);
+    // frontend.setsockopt(zeroMQ.ZMQ_RCVHWM, 0);
+    // frontend.setsockopt(zeroMQ.ZMQ_SNDHWM, 0);
 
     // When we receive data on frontend, it means someone is publishing
     frontend.on('message', (...args) => {

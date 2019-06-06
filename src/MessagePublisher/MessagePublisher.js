@@ -13,6 +13,9 @@ function MessagePublisher(address) {
     TransportInterface.call(this);
 
     const zmqSocket = zeroMQ.createSocket('pub');
+
+    // uncomment next line if messages are lost
+    // zmqSocket.setsockopt(zeroMQ.ZMQ_SNDHWM, 0);
     const socket = new utils.BufferedSocket(zmqSocket, utils.SocketType.connectable);
 
 

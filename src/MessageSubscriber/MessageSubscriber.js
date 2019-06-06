@@ -10,6 +10,9 @@ const zeroMQ = require('zeromq');
 function MessageSubscriber(address, subscriptions, onMessageCallback) {
     const zmqSocket = zeroMQ.createSocket('sub');
 
+    // uncomment next line if messages are lost
+    // zmqSocket.setsockopt(zeroMQ.ZMQ_RCVHWM, 0);
+
     if(arguments.length === 2 && typeof subscriptions === 'function') {
         onMessageCallback = subscriptions;
         subscriptions = [''];

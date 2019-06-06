@@ -25,5 +25,4 @@ Object.keys(logger).forEach(key => {
    console[key] = logger[key];
 });
 
-console.log('super log');
-console.error('overwrite successful');
+console.log('overwrite successful');

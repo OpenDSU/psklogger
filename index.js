@@ -10,7 +10,9 @@ if(!global.hasOwnProperty('$$')) {
  * Overwrite this to provide relevant information for other environments (ex: for domains, browser etc.)
  * @interface
  */
-global.$$.getEnvironmentData = EnvironmentDataProvider.getEnvironmentData;
+if(!global.$$.hasOwnProperty('getEnvironmentData')) {
+    global.$$.getEnvironmentData = EnvironmentDataProvider.getEnvironmentData;
+}
 
 function overwriteConsole() {
     const logger = new PSKLogger();

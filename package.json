@@ -17,6 +17,7 @@
   },
   "homepage": "git+https://github.com/PrivateSky/psklogger#readme",
   "dependencies": {
+    "better-sqlite3": "^5.4.0",
     "zeromq": "4.6.0"
   }
 }

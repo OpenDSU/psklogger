@@ -10,13 +10,15 @@ const cluster = require('cluster');
  * the address of every subscriber
  *
  * The second process is a subscriber of the proxy that redirects all traffic to the "Collector" node
+ *
+ * @deprecated use the one in privatesky/scripts/bin
  */
 
 if(cluster.isMaster) {
     // needs to be different process, otherwise it might loose messages if subscribers are slow
 
     const Configurator = require('../src/utils').Configurator;
-    const PubSubProxy = require('../src/PubSubProxy');
+    const PubSubProxy = require('../src/PubSubProxy').PubSubProxy;
 
 
     const config = Configurator.getConfig();

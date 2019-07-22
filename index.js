@@ -1,5 +1,8 @@
 const EnvironmentDataProvider = require('./src/utils').EnvironmentDataProvider;
+const MessagePublisher = require('./src/MessagePublisher');
+const MessageSubscriber = require('./src/MessageSubscriber');
 const PSKLogger = require('./src/pskLoggerClient/index');
+const PubSubProxy = require('./src/PubSubProxy');
 
 if(!global.hasOwnProperty('$$')) {
     global.$$ = {};
@@ -30,6 +33,9 @@ function overwriteConsole() {
 }
 
 module.exports = {
+    MessagePublisherModule: MessagePublisher,
+    MessageSubscriberModule: MessageSubscriber,
     overwriteConsole,
-    PSKLogger
+    PSKLogger,
+    PubSubProxyModule: PubSubProxy
 };

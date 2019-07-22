@@ -1,3 +1,3 @@
 const PubSubProxy = require('./PubSubProxy');
 
-module.exports = PubSubProxy;
+module.exports = {PubSubProxy};

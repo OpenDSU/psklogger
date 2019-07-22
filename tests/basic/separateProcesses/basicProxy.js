@@ -1,3 +1,3 @@
-const PubSubProxy = require('../../../src/PubSubProxy');
+const PubSubProxy = require('../../../src/PubSubProxy').PubSubProxy;
 
-const proxy = new PubSubProxy({addressForPublishers: 'tcp://127.0.0.1:7000', addressForSubscribers: 'tcp://127.0.0.1:7001'});
+new PubSubProxy({addressForPublishers: 'tcp://127.0.0.1:7000', addressForSubscribers: 'tcp://127.0.0.1:7001'});

@@ -1,6 +1,6 @@
 const Configurator = require('../../../src/utils/Configurator');
-const PubSubProxy = require('../../../src/PubSubProxy');
+const PubSubProxy = require('../../../src/PubSubProxy').PubSubProxy;
 
 const config = Configurator.getConfig();
 
-const proxy = new PubSubProxy(config);
+new PubSubProxy(config);

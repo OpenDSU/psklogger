@@ -46,6 +46,7 @@ function PSKLogger () {
     this.info = info;
     this.log = log;
     this.warn = warn;
+    this.event = logger.event;
 
 }
 

@@ -61,6 +61,7 @@ function LoggerClient(messagePublisher) {
     this.info = info;
     this.log = log;
     this.warn = warn;
+    this.event = genericLoggerClient.event;
 }
 
 module.exports = LoggerClient;

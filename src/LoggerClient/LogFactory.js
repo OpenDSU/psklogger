@@ -10,6 +10,15 @@ function createLog(logLevel, meta, messages) {
     }
 }
 
+function createEvent(meta, messages) {
+    return {
+        messages,
+        meta,
+        time: performance.now() + performance.timeOrigin
+    };
+}
+
 module.exports = {
-    createLog
+    createLog,
+    createEvent
 };

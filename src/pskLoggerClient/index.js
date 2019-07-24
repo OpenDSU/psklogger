@@ -34,6 +34,11 @@ function PSKLogger () {
         return logger.warn(meta, ...params);
     }
 
+    function event(event, ...params) {
+        const meta = prepareMeta();
+        return logger.event(event, meta, ...params);
+    }
+
     function prepareMeta() {
         if(global.$$.getEnvironmentData) {
             return global.$$.getEnvironmentData();
@@ -46,7 +51,7 @@ function PSKLogger () {
     this.info = info;
     this.log = log;
     this.warn = warn;
-    this.event = logger.event;
+    this.event = event;
 
 }
 

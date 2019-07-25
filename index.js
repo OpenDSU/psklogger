@@ -19,6 +19,11 @@ if(process.env.hasOwnProperty('PRIVATESKY_AGENT_NAME')) {
     enableEnvironmentDataDefault();
 }
 
+/**
+ * @deprecated
+ * PSKLogger should be used as is without overwriting console.
+ * The functionality should be added to PSKLogger to log to console the message and useful metadata
+ */
 function overwriteConsole() {
     const logger = new PSKLogger();
 

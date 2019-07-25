@@ -8,13 +8,15 @@ if(!global.hasOwnProperty('$$')) {
     global.$$ = {};
 }
 
-
 /**
  * Overwrite this to provide relevant information for other environments (ex: for domains, browser etc.)
- * @interface
  */
-if(!global.$$.hasOwnProperty('getEnvironmentData')) {
-    global.$$.getEnvironmentData = EnvironmentDataProvider.getEnvironmentData;
+if(process.env.hasOwnProperty('PRIVATESKY_AGENT_NAME')) {
+    enableEnvironmentDataForAgent();
+} else if(process.env.hasOwnProperty('PRIVATESKY_DOMAIN_NAME')) {
+    enableEnvironmentDataForDomain()
+} else if(!global.$$.hasOwnProperty('getEnvironmentData')) {
+    enableEnvironmentDataDefault();
 }
 
 function overwriteConsole() {
@@ -27,9 +29,31 @@ function overwriteConsole() {
        console[key] = function() {
            const log = logger[key].apply(logger, arguments);
 
-           originalConsole[key].apply(originalConsole, [`[${log.meta.context}]`, ...log.messages]);
+           let context = '';
+
+           if(log.meta.origin === 'node') {
+               context = `node:${log.meta.context}`;
+           } else if (log.meta.origin === 'domain') {
+               context = `domain:${log.meta.domain}`;
+           } else if (log.meta.origin === 'agent') {
+               context = `domain:${log.meta.domain}:agent:${log.meta.agent}`;
+           }
+
+           originalConsole[key].apply(originalConsole, [`[${context}]`, ...log.messages]);
        }
     });
+}
+
+function enableEnvironmentDataDefault() {
+    global.$$.getEnvironmentData = EnvironmentDataProvider.getEnvironmentData;
+}
+
+function enableEnvironmentDataForAgent() {
+    global.$$.getEnvironmentData = EnvironmentDataProvider.getEnvironmentDataForAgent;
+}
+
+function enableEnvironmentDataForDomain() {
+    global.$$.getEnvironmentData = EnvironmentDataProvider.getEnvironmentDataForDomain;
 }
 
 module.exports = {

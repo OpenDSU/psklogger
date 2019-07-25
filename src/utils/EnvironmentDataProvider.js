@@ -8,12 +8,32 @@ function getEnvironmentData () {
     const lastSep = processPath.lastIndexOf(path.sep);
     const processStartFile = processPath.substring(lastSep + 1);
     return {
-        context: `node:${processStartFile}`,
+        origin: 'node',
+        context: processStartFile,
         processStartFile: processStartFile,
         platform: platform
     };
 }
 
+function getEnvironmentDataForDomain() {
+    return {
+        origin: 'domain',
+        domain: process.env.PRIVATESKY_DOMAIN_NAME,
+        platform: platform
+    }
+}
+
+function getEnvironmentDataForAgent() {
+    return {
+        origin: 'agent',
+        domain: process.env.PRIVATESKY_DOMAIN_NAME,
+        agent: process.env.PRIVATESKY_AGENT_NAME,
+        platform: platform
+    }
+}
+
 module.exports = {
-    getEnvironmentData
+    getEnvironmentData,
+    getEnvironmentDataForAgent,
+    getEnvironmentDataForDomain,
 };

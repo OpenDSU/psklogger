@@ -1,7 +1,11 @@
-const MessagePublisher   = require('./MessagePublisher');
 const TransportInterface = require('./TransportInterface');
 
 module.exports = {
-    MessagePublisher,
     TransportInterface
 };
+
+if(process.env.context === 'sandbox') {
+    module.exports.MessagePublisher = require('./MessagePublisherForSandbox');
+} else {
+    module.exports.MessagePublisher = require('./MessagePublisher');
+}

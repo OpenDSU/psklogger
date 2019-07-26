@@ -1,12 +1,21 @@
-const {performance} = require('perf_hooks');
+function getTime() {
+    if(process.env.context === 'sandbox') {
+
+        return Date.now()
+    } else {
+        const {performance} = require('perf_hooks');
+
+        return performance.now() + performance.timeOrigin;
+    }
+}
+
 
 function createLog(logLevel, meta, messages) {
     return {
         level: logLevel,
         messages: messages,
         meta: meta,
-        time: new Date(),
-        msTime: performance.now() + performance.timeOrigin
+        time: getTime()
     }
 }
 
@@ -14,7 +23,7 @@ function createEvent(meta, messages) {
     return {
         messages,
         meta,
-        time: performance.now() + performance.timeOrigin
+        time: getTime()
     };
 }
 

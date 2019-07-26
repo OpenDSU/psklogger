@@ -1,23 +1,11 @@
+const PSKLogger = require('./src/PSKLoggerClient/index');
 const EnvironmentDataProvider = require('./src/utils').EnvironmentDataProvider;
-const MessagePublisher = require('./src/MessagePublisher');
-const MessageSubscriber = require('./src/MessageSubscriber');
-const PSKLogger = require('./src/pskLoggerClient/index');
-const PubSubProxy = require('./src/PubSubProxy');
+
 
 if(!global.hasOwnProperty('$$')) {
     global.$$ = {};
 }
 
-/**
- * Overwrite this to provide relevant information for other environments (ex: for domains, browser etc.)
- */
-if(process.env.hasOwnProperty('PRIVATESKY_AGENT_NAME')) {
-    enableEnvironmentDataForAgent();
-} else if(process.env.hasOwnProperty('PRIVATESKY_DOMAIN_NAME')) {
-    enableEnvironmentDataForDomain()
-} else if(!global.$$.hasOwnProperty('getEnvironmentData')) {
-    enableEnvironmentDataDefault();
-}
 
 /**
  * @deprecated
@@ -25,7 +13,12 @@ if(process.env.hasOwnProperty('PRIVATESKY_AGENT_NAME')) {
  * The functionality should be added to PSKLogger to log to console the message and useful metadata
  */
 function overwriteConsole() {
-    const logger = new PSKLogger();
+    if(process.env.context === 'sandbox') {
+        console.log("Execution detected in sandbox, console won't be overwritten");
+        return;
+    }
+
+    const logger = PSKLogger.getLogger();
 
     const originalConsole = {};
     Object.keys(console).forEach(key => originalConsole[key] = console[key]);
@@ -34,37 +27,71 @@ function overwriteConsole() {
        console[key] = function() {
            const log = logger[key].apply(logger, arguments);
 
-           let context = '';
+           const context = getContextForMeta(log.meta);
 
-           if(log.meta.origin === 'node') {
-               context = `node:${log.meta.context}`;
-           } else if (log.meta.origin === 'domain') {
-               context = `domain:${log.meta.domain}`;
-           } else if (log.meta.origin === 'agent') {
-               context = `domain:${log.meta.domain}:agent:${log.meta.agent}`;
+           if(originalConsole.hasOwnProperty(key)) {
+               originalConsole[key].apply(originalConsole, [`[${context}]`, ...log.messages]);
            }
-
-           originalConsole[key].apply(originalConsole, [`[${context}]`, ...log.messages]);
        }
     });
+
+
+    /**
+     * @return {string|*}
+     */
+    function getContextForMeta(meta) {
+        const contexts = {
+            node: (meta) => `node:${meta.context}`,
+            domain: (meta) =>`domain:${meta.domain}`,
+            agent: (meta) => `domain:${meta.domain}:agent:${meta.agent}`,
+            sandbox: () => `sandbox`
+        };
+
+        if (contexts.hasOwnProperty(meta.origin)) {
+            return contexts[meta.origin](meta);
+        } else {
+            return '';
+        }
+    }
 }
 
-function enableEnvironmentDataDefault() {
-    global.$$.getEnvironmentData = EnvironmentDataProvider.getEnvironmentData;
+if (process.env.context !== 'sandbox') {
+
+    const MessagePublisher = require('./src/MessagePublisher');
+    const MessageSubscriber = require('./src/MessageSubscriber');
+    const PubSubProxy = require('./src/PubSubProxy');
+
+    function enableEnvironmentDataDefault() {
+        global.$$.getEnvironmentData = EnvironmentDataProvider.getEnvironmentData;
+    }
+
+    function enableEnvironmentDataForAgent() {
+        global.$$.getEnvironmentData = EnvironmentDataProvider.getEnvironmentDataForAgent;
+    }
+
+    function enableEnvironmentDataForDomain() {
+        global.$$.getEnvironmentData = EnvironmentDataProvider.getEnvironmentDataForDomain;
+    }
+
+
+    /**
+     * Overwrite this to provide relevant information for other environments (ex: for domains, browser etc.)
+     */
+    if(process.env.hasOwnProperty('PRIVATESKY_AGENT_NAME')) {
+        enableEnvironmentDataForAgent();
+    } else if(process.env.hasOwnProperty('PRIVATESKY_DOMAIN_NAME')) {
+        enableEnvironmentDataForDomain()
+    } else if(!global.$$.hasOwnProperty('getEnvironmentData')) {
+        enableEnvironmentDataDefault();
+    }
+
+    module.exports.MessagePublisherModule  = MessagePublisher;
+    module.exports.MessageSubscriberModule = MessageSubscriber;
+    module.exports.PubSubProxyModule       = PubSubProxy;
+} else {
+    global.$$.getEnvironmentData = EnvironmentDataProvider.getEnvironmentDataForSandbox;
 }
 
-function enableEnvironmentDataForAgent() {
-    global.$$.getEnvironmentData = EnvironmentDataProvider.getEnvironmentDataForAgent;
-}
 
-function enableEnvironmentDataForDomain() {
-    global.$$.getEnvironmentData = EnvironmentDataProvider.getEnvironmentDataForDomain;
-}
-
-module.exports = {
-    MessagePublisherModule: MessagePublisher,
-    MessageSubscriberModule: MessageSubscriber,
-    overwriteConsole,
-    PSKLogger,
-    PubSubProxyModule: PubSubProxy
-};
+module.exports.overwriteConsole = overwriteConsole;
+module.exports.PSKLogger = PSKLogger;

@@ -1,12 +1,15 @@
 const GenericLoggerClient = require('./GenericLoggerClient');
 const LogLevel = require('../utils/LogLevel');
+const LoggerInterface = require('./LoggerInterface');
 
 /**
  *
  * @param {TransportInterface} messagePublisher
+ * @implements LoggerInterface
  * @constructor
  */
 function LoggerClient(messagePublisher) {
+    LoggerInterface.call(this);
 
     const genericLoggerClient = new GenericLoggerClient(messagePublisher);
 
@@ -43,6 +46,14 @@ function LoggerClient(messagePublisher) {
         return genericLoggerClient.log(logLevel, meta, params);
     }
 
+    function event(channel, meta = {}, ...params) {
+        return genericLoggerClient.event(channel, meta, ...params);
+    }
+    
+    function redirect(channel, logObject) {
+        return genericLoggerClient.rawLog(channel, logObject)
+    }
+
 
     /************* PRIVATE METHODS *************/
 
@@ -56,12 +67,13 @@ function LoggerClient(messagePublisher) {
 
     /************* EXPORTS *************/
 
-    this.debug = debug;
-    this.error = error;
-    this.info = info;
-    this.log = log;
-    this.warn = warn;
-    this.event = genericLoggerClient.event;
+    this.debug    = debug;
+    this.error    = error;
+    this.event    = event;
+    this.info     = info;
+    this.log      = log;
+    this.redirect = redirect;
+    this.warn     = warn;
 }
 
 module.exports = LoggerClient;

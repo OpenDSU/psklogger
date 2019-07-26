@@ -1,6 +1,6 @@
 const Configurator = require('../../../src/utils/Configurator');
 const MessageSubscriber = require('../../../src/MessageSubscriber').MessageSubscriber;
-const PSKLogger = require('../../../src/pskLoggerClient');
+const PSKLogger = require('../../../src/PSKLoggerClient');
 
 const config = Configurator.getConfig();
 

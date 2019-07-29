@@ -46,7 +46,7 @@ function GenericLoggerClient(messagePublisher) {
         return event;
     }
 
-    function rawLog(channel, message) {
+    function publish(channel, message) {
         messagePublisher.send(channel, message);
 
         return message;
@@ -54,7 +54,7 @@ function GenericLoggerClient(messagePublisher) {
 
     this.event  = event;
     this.log    = log;
-    this.rawLog = rawLog;
+    this.publish = publish;
 }
 
 module.exports = GenericLoggerClient;

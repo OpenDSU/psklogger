@@ -51,7 +51,7 @@ function LoggerClient(messagePublisher) {
     }
     
     function redirect(channel, logObject) {
-        return genericLoggerClient.rawLog(channel, logObject)
+        return genericLoggerClient.publish(channel, logObject)
     }
 
 

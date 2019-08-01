@@ -24,15 +24,27 @@ function overwriteConsole() {
     Object.keys(console).forEach(key => originalConsole[key] = console[key]);
 
     Object.keys(logger).forEach(key => {
-       console[key] = function() {
-           const log = logger[key].apply(logger, arguments);
+        if(key != "log") {
+            console[key] = function () {
 
-           const context = getContextForMeta(log.meta);
+                const log = logger[key].apply(logger, arguments);
 
-           if(originalConsole.hasOwnProperty(key)) {
-               originalConsole[key].apply(originalConsole, [`[${context}]`, ...log.messages]);
-           }
-       }
+                const context = getContextForMeta(log.meta);
+
+                if (originalConsole.hasOwnProperty(key)) {
+                    originalConsole[key].apply(originalConsole, [`[${context}]`, ...log.messages]);
+                }
+            }
+        } else {
+            console.log = function(...args){
+                if(args[0] == undefined) throw new Error("Printing an undefined throws this error");
+                //logger.log(...args); ignore console logs... ;)
+                const log = logger[key].apply(logger, arguments);
+                const context = getContextForMeta(log.meta) + " log:\n\r";
+                args.unshift(context)
+                originalConsole.log(...args);
+            }
+        }
     });
 
 

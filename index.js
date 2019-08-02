@@ -40,8 +40,8 @@ function overwriteConsole() {
                 if(args[0] == undefined) throw new Error("Printing an undefined throws this error");
                 //logger.log(...args); ignore console logs... ;)
                 const log = logger[key].apply(logger, arguments);
-                const context = getContextForMeta(log.meta) + " log:\n\r";
-                args.unshift(context)
+                /*const context = getContextForMeta(log.meta) + " log:\n\r";
+                args.unshift(context) */
                 originalConsole.log(...args);
             }
         }

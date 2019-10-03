@@ -10,7 +10,6 @@ function getEnvironmentData () {
     const processStartFile = processPath.substring(lastSep + 1);
     return {
         origin: 'node',
-        context: processStartFile,
         processStartFile: processStartFile,
         platform: platform
     };

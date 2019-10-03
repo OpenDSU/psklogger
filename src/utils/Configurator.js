@@ -1,7 +1,7 @@
 const config = {
-    addressForPublishers: 'tcp://127.0.0.1:7000',
-    addressForSubscribers: 'tcp://127.0.0.1:7001',
-    addressForCollector: 'tcp://127.0.0.1:5558'
+    addressForPublishers: process.env.PUBLISH_LOGS_ADDR || 'tcp://127.0.0.1:7000',
+    addressForSubscribers: process.env.SUBSCRIBE_FOR_LOGS_ADDR || 'tcp://127.0.0.1:7001',
+    addressToCollector: process.env.COLLECTOR_ADDR || 'tcp://127.0.0.1:5558'
 };
 
 module.exports = {

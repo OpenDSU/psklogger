@@ -22,7 +22,7 @@ function MessagePublisherForSandbox() {
         try {
             global.logger.send([channel, logObject]);
         } catch (e) {
-            console.error('Error while sending or serializing message');
+            console.error('Error while sending or serializing message from sandbox', e);
         }
     };
 

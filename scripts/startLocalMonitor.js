@@ -30,7 +30,8 @@ if(cluster.isMaster) {
     const NODE_NAME = process.env.NODE_NAME || 'anon';
     const config = Configurator.getConfig();
 
-    const zmq = require('zeromq');
+    const zeroMQModuleName = "zeromq";
+    const zmq = require(zeroMQModuleName);
     const sender = zmq.socket('push');
     sender.connect(config.addressForCollector);
 

@@ -1,4 +1,5 @@
-const zeroMQ = require('zeromq');
+const zeroMQModuleName = "zeromq";
+const zmq = require(zeroMQModuleName);
 
 /**
  * Creates a ZeroMQ Subscriber that listens for provided topics on the specified address for a publisher

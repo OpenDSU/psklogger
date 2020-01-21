@@ -1,7 +1,7 @@
 const TransportInterface = require('./TransportInterface');
 const utils = require('../utils');
 const zeroMQModuleName = "zeromq";
-const zmq = require(zeroMQModuleName);
+const zeroMQ = require(zeroMQModuleName);
 
 
 /**

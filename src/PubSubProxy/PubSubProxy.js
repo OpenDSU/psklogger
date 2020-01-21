@@ -1,5 +1,5 @@
 const zeroMQModuleName = "zeromq";
-const zmq = require(zeroMQModuleName);
+const zeroMQ = require(zeroMQModuleName);
 const utils = require('../utils');
 
 /**

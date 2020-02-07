@@ -1,11 +1,6 @@
 const PSKLogger = require('./src/PSKLoggerClient/index');
 const EnvironmentDataProvider = require('./src/utils').EnvironmentDataProvider;
-
-
-if(!global.hasOwnProperty('$$')) {
-    global.$$ = {};
-}
-
+const envTypes = require("overwrite-require").constants;
 
 /**
  * @deprecated
@@ -13,7 +8,8 @@ if(!global.hasOwnProperty('$$')) {
  * The functionality should be added to PSKLogger to log to console the message and useful metadata
  */
 function overwriteConsole() {
-    if(process.env.context === 'sandbox') {
+
+    if($$.environmentType === envTypes.ISOLATE_ENVIRONMENT_TYPE) {
         console.log("Execution detected in sandbox, console won't be overwritten");
         return;
     }
@@ -67,7 +63,7 @@ function overwriteConsole() {
     }
 }
 
-if (process.env.context !== 'sandbox') {
+if ($$.environmentType !== envTypes.ISOLATE_ENVIRONMENT_TYPE) {
 
     const MessagePublisher = require('./src/MessagePublisher');
     const MessageSubscriber = require('./src/MessageSubscriber');

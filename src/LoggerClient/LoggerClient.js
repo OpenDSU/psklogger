@@ -16,35 +16,21 @@ function LoggerClient(messagePublisher) {
 
     /************* PUBLIC METHODS *************/
 
-    function debug(meta = {}, ...params) {
-        const logLevel = _getLogLevel(LogLevel.debug);
+    public_methods = ["debug", "error", "info", "log", "warn"];
 
-        return genericLoggerClient.log(logLevel, meta, params);
+    function exposePublicMethod(target, methodName){
+        let handler = function (meta = {}, ...params) {
+            const logLevel = _getLogLevel(LogLevel.debug);
+            return genericLoggerClient.log(logLevel, meta, params);
+        };
+        Object.defineProperty(handler, "name", {value: methodName});
+        target[methodName] = handler;
     }
 
-    function error(meta = {}, ...params) {
-        const logLevel = _getLogLevel(LogLevel.error);
-
-        return genericLoggerClient.log(logLevel, meta, params);
-    }
-
-    function info(meta = {}, ...params) {
-        const logLevel = _getLogLevel(LogLevel.info);
-
-        return genericLoggerClient.log(logLevel, meta, params);
-    }
-
-    function log(meta = {}, ...params) {
-        const logLevel = _getLogLevel(LogLevel.log);
-
-        return genericLoggerClient.log(logLevel, meta, params);
-    }
-
-    function warn(meta = {}, ...params) {
-        const logLevel = _getLogLevel(LogLevel.warn);
-
-        return genericLoggerClient.log(logLevel, meta, params);
-    }
+    let self = this;
+    public_methods.forEach(function(methodName){
+        exposePublicMethod(self, methodName);
+    });
 
     function event(channel, meta = {}, ...params) {
         return genericLoggerClient.event(channel, meta, ...params);
@@ -66,14 +52,8 @@ function LoggerClient(messagePublisher) {
 
 
     /************* EXPORTS *************/
-
-    this.debug    = debug;
-    this.error    = error;
     this.event    = event;
-    this.info     = info;
-    this.log      = log;
     this.redirect = redirect;
-    this.warn     = warn;
 }
 
 module.exports = LoggerClient;

@@ -1,11 +1,9 @@
 const TransportInterface = require('./TransportInterface');
+const MessagePublisher = require('./MessagePublisher');
+const MessagePublisherForSandbox = require('./MessagePublisherForSandbox');
 
 module.exports = {
-    TransportInterface
+    TransportInterface,
+    MessagePublisher,
+    MessagePublisherForSandbox
 };
-
-if(process.env.context === 'sandbox') {
-    module.exports.MessagePublisher = require('./MessagePublisherForSandbox');
-} else {
-    module.exports.MessagePublisher = require('./MessagePublisher');
-}

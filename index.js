@@ -1,3 +1,12 @@
+try{
+    const zmq = "zeromq";
+    require(zmq);
+}catch(e){
+    //if zeromq module is not available then psk logger can not do it's job
+    module.exports = undefined;
+    return;
+}
+
 const PSKLogger = require('./src/PSKLoggerClient/index');
 const EnvironmentDataProvider = require('./src/utils').EnvironmentDataProvider;
 const envTypes = require("overwrite-require").constants;

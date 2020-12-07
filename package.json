@@ -17,6 +17,5 @@
   },
   "homepage": "git+https://github.com/PrivateSky/psklogger#readme",
   "dependencies": {
-    "zeromq": "4.6.0"
   }
 }

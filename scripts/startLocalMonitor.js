@@ -11,7 +11,7 @@ const cluster = require('cluster');
  *
  * The second process is a subscriber of the proxy that redirects all traffic to the "Collector" node
  *
- * @deprecated use the one in privatesky/scripts/bin
+ * @deprecated use the one in opendsu-sdk/scripts/bin
  */
 
 if(cluster.isMaster) {

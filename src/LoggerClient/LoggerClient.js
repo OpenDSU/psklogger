@@ -16,9 +16,9 @@ function LoggerClient(messagePublisher) {
 
     /************* PUBLIC METHODS *************/
 
-    public_methods = ["debug", "error", "info", "log", "warn"];
+    const public_methods = ["debug", "error", "info", "log", "warn"];
 
-    function exposePublicMethod(target, methodName){
+    function exposePublicMethod(target, methodName) {
         let handler = function (meta = {}, ...params) {
             const logLevel = _getLogLevel(LogLevel.debug);
             return genericLoggerClient.log(logLevel, meta, params);
@@ -28,14 +28,14 @@ function LoggerClient(messagePublisher) {
     }
 
     let self = this;
-    public_methods.forEach(function(methodName){
+    public_methods.forEach(function (methodName) {
         exposePublicMethod(self, methodName);
     });
 
     function event(channel, meta = {}, ...params) {
         return genericLoggerClient.event(channel, meta, ...params);
     }
-    
+
     function redirect(channel, logObject) {
         return genericLoggerClient.publish(channel, logObject)
     }
@@ -52,7 +52,7 @@ function LoggerClient(messagePublisher) {
 
 
     /************* EXPORTS *************/
-    this.event    = event;
+    this.event = event;
     this.redirect = redirect;
 }
 

@@ -1,4 +1,4 @@
-const psklogger =  require('../../../index');
+const psklogger = require('../../../index');
 
 psklogger.overwriteConsole();
 

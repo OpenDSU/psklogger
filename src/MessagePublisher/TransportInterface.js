@@ -3,7 +3,7 @@
  * @interface
  */
 function TransportInterface() {
-    this.send = function (channel, logObject) {
+    this.send = function () {
         throw new Error('Not implemented');
     }
 }

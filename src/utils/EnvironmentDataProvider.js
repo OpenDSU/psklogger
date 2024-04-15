@@ -1,8 +1,8 @@
-function getEnvironmentData () {
+function getEnvironmentData() {
     const or = require("overwrite-require");
     let data = {origin: $$.environmentType};
 
-    switch ($$.environmentType){
+    switch ($$.environmentType) {
         case or.NODEJS_ENVIRONMENT_TYPE:
             const pathModule = "path";
             const path = require(pathModule);
@@ -44,7 +44,7 @@ function getEnvironmentDataForAgent() {
     const envTypes = require("overwrite-require").constants;
 
     let data = {origin: "agent"};
-    switch($$.environmentType){
+    switch ($$.environmentType) {
         case envTypes.THREAD_ENVIRONMENT_TYPE:
             data.domain = process.env.PRIVATESKY_DOMAIN_NAME;
             data.agent = process.env.PRIVATESKY_AGENT_NAME;
@@ -58,17 +58,17 @@ function getEnvironmentDataForAgent() {
 
 let handler;
 
-if(process.env.hasOwnProperty('PRIVATESKY_AGENT_NAME')) {
+if (process.env.hasOwnProperty('PRIVATESKY_AGENT_NAME')) {
     handler = getEnvironmentDataForAgent;
-} else if(process.env.hasOwnProperty('PRIVATESKY_DOMAIN_NAME')) {
+} else if (process.env.hasOwnProperty('PRIVATESKY_DOMAIN_NAME')) {
     handler = getEnvironmentDataForDomain;
 } else {
     handler = getEnvironmentData;
 }
 
-if(typeof global.$$.getEnvironmentData === "undefined"){
+if (typeof global.$$.getEnvironmentData === "undefined") {
     global.$$.getEnvironmentData = handler;
-}else{
+} else {
     console.log("EnvironmentData handler already set.");
 }
 

@@ -52,8 +52,8 @@ function GenericLoggerClient(messagePublisher) {
         return message;
     }
 
-    this.event  = event;
-    this.log    = log;
+    this.event = event;
+    this.log = log;
     this.publish = publish;
 }
 

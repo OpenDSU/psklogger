@@ -9,7 +9,7 @@ const SocketType = require('./SocketType');
  * @constructor
  */
 function BufferedSocket(socket, type, maxSize = 10000) {
-    if(maxSize < 0) {
+    if (maxSize < 0) {
         maxSize = 1000;
     }
 

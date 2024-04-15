@@ -1,4 +1,4 @@
-const Configurator     = require('../utils/Configurator');
+const Configurator = require('../utils/Configurator');
 const GenericPSKLogger = require('./GenericPSKLogger');
 
 function getLogger() {

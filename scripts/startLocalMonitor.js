@@ -14,7 +14,7 @@ const cluster = require('cluster');
  * @deprecated use the one in opendsu-sdk/scripts/bin
  */
 
-if(cluster.isMaster) {
+if (cluster.isMaster) {
     // needs to be different process, otherwise it might loose messages if subscribers are slow
 
     const Configurator = require('../src/utils').Configurator;
@@ -37,8 +37,12 @@ if(cluster.isMaster) {
 
     new MessageSubscriber(config.addressForSubscribers, ['logs', ''], (topic, message) => {
         console.log('sending ', {topic: topic.toString(), message: JSON.parse(message.toString())});
-        
-        sender.send(JSON.stringify({nodeName: NODE_NAME, topic: topic.toString(), message: JSON.parse(message.toString())}));
+
+        sender.send(JSON.stringify({
+            nodeName: NODE_NAME,
+            topic: topic.toString(),
+            message: JSON.parse(message.toString())
+        }));
 
     });
 

@@ -22,7 +22,7 @@ MessageSubscriber(config.addressForSubscribers, ['logs'], consoleSubscriber);
 const logger = new PSKLogger();
 
 Object.keys(logger).forEach(key => {
-   console[key] = logger[key];
+    console[key] = logger[key];
 });
 
 console.log('overwrite successful');

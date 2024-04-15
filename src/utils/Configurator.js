@@ -5,7 +5,7 @@ const config = {
 };
 
 module.exports = {
-    getConfig () {
+    getConfig() {
         return Object.freeze(config);
     }
 };

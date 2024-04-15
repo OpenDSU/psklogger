@@ -44,11 +44,11 @@ function GenericPSKLogger(messagePublisher) {
         const meta = prepareMeta();
         return logger.event(event, meta, params);
     }
-    
+
     function redirect(logType, logObject) {
         const logMeta = logObject.meta;
         const meta = prepareMeta();
-        
+
         Object.assign(meta, logMeta);
 
         logObject.meta = meta;
@@ -60,18 +60,18 @@ function GenericPSKLogger(messagePublisher) {
         if (global.$$.getEnvironmentData) {
             return global.$$.getEnvironmentData();
         }
-        
+
         return {};
     }
 
 
-    this.debug    = debug;
-    this.error    = error;
-    this.event    = event;
-    this.info     = info;
-    this.log      = log;
+    this.debug = debug;
+    this.error = error;
+    this.event = event;
+    this.info = info;
+    this.log = log;
     this.redirect = redirect;
-    this.warn     = warn;
+    this.warn = warn;
 
 }
 

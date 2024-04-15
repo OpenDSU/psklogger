@@ -1,6 +1,6 @@
 function getTime() {
     const envTypes = require("overwrite-require").constants;
-    switch($$.environmentType) {
+    switch ($$.environmentType) {
         case envTypes.NODEJS_ENVIRONMENT_TYPE:
             const perf_hooksModule = 'perf_hooks';
             const {performance} = require(perf_hooksModule);

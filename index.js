@@ -1,7 +1,7 @@
-try{
+try {
     const zmq = "zeromq";
     require(zmq);
-}catch(e){
+} catch (e) {
     //if zeromq module is not available then psk logger can not do it's job
     module.exports = undefined;
     return;
@@ -17,7 +17,7 @@ const envTypes = require("overwrite-require").constants;
 function getContextForMeta(meta) {
     const contexts = {
         node: (meta) => `node:${meta.context}`,
-        domain: (meta) =>`domain:${meta.domain}`,
+        domain: (meta) => `domain:${meta.domain}`,
         agent: (meta) => `domain:${meta.domain}:agent:${meta.agent}`,
         sandbox: () => `sandbox`
     };
@@ -37,6 +37,6 @@ switch ($$.environmentType) {
         module.exports.PubSubProxyModule = require('./src/PubSubProxy');
         break;
     default:
-        //nothing to do here for now;
+    //nothing to do here for now;
 }
 module.exports.PSKLogger = PSKLogger;

@@ -19,7 +19,7 @@ function consoleSubscriber(topic, message) {
 }
 
 MessageSubscriber(config.addressForSubscribers, ['logs'], consoleSubscriber);
-const logger = new PSKLogger();
+const logger = PSKLogger.getLogger();
 
 Object.keys(logger).forEach(key => {
     console[key] = logger[key];
